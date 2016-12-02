@@ -1,0 +1,19 @@
+{
+    "folders":
+    [
+        {
+            "path": ".",
+            "folder_exclude_patterns":
+            [
+                "node_modules",
+                "builds"
+            ]
+        }
+    ],
+    "settings":
+    {
+        "tab_size": 4,
+        "default_line_ending": "unix",
+        "translate_tabs_to_spaces": true
+    }
+}
