@@ -1,8 +1,8 @@
 {
-  "name": "ng2-heroes-gulp",
+  "name": "ng2-router-gulp",
   "version": "1.0.0",
   "description": "Famous angular 2 tutorial: tour of heroes with gulpjs",
-  "repository": "ibqn/ng2-heroes-gulp",
+  "repository": "ibqn/ng2-router-gulp",
   "dependencies": {
     "@angular/common": "^2.2.2",
     "@angular/compiler": "^2.2.2",

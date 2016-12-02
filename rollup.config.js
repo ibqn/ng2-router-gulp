@@ -11,8 +11,9 @@ const entryPath = 'builds/release/';
 export default {
     entry: entryPath + 'main-aot.js',
     dest: entryPath + 'js/build.js', // output a single application bundle
-    sourceMap: true,
-    sourceMapFile: entryPath + 'js/build.js.map',
+    sourceMap: false,
+    //sourceMap: true,
+    //sourceMapFile: entryPath + 'js/build.js.map',
     format: 'iife',
     plugins: [
         nodeResolve({
