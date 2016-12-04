@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, Params }    from '@angular/router';
 import { HeroService }  from './hero.service';
 import { Hero }  from './hero.model';
 
-import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 
 
