@@ -1,14 +1,14 @@
 import { Injectable }               from '@angular/core';
 import { Http, Response, Headers }  from '@angular/http';
 
-import { Hero } from './hero.model';
+import { Crisis } from './crisis.model';
 
 import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
-export class HeroService {
-    private heroesUrl = 'app/crisis';
+export class CrisisService {
+    private crisisesUrl = 'app/heroes';
 
     constructor(private http: Http) {}
 
@@ -25,19 +25,20 @@ export class HeroService {
         return Observable.throw(errMsg);
     }
 
-    private extractData<T>(response: Response) {
+    private extractData(response: Response) {
         let body = response.json();
-        return body.data || {} as T;
+        return body.data || {} as Crisis;
     }
 
-    getHeroes(): Observable<Hero[]> {
-        return this.http.get(this.heroesUrl)
+    getCrisises(): Observable<Crisis[]> {
+        console.log('get all');
+        return this.http.get(this.crisisesUrl)
         .map(this.extractData)
         .catch(this.handleError);
     }
 
-    getHero(id: number | string): Observable<Hero> {
-        return this.getHeroes()
-        .map(heroes => heroes.find(hero => hero.id === +id));
+    getCrisis(id: number | string): Observable<Crisis> {
+        return this.getCrisises()
+        .map(crisises => crisises.find(crisis => crisis.id === +id));
     }
 }

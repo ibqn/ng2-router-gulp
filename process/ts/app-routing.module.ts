@@ -1,14 +1,13 @@
 import { NgModule }                 from '@angular/core';
 import { RouterModule, Routes }     from '@angular/router';
 
-import { CrisisListComponent }      from './crisis-list.component';
-
 
 const routes: Routes = [
     {
-        path: 'crisis-center',
-        component: CrisisListComponent
-    }
+        path: '',
+        redirectTo: 'crisis-center',
+        pathMatch: 'full'
+    },
 ];
 
 

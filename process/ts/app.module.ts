@@ -5,16 +5,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpModule }           from '@angular/http';
 
 import { AppComponent }         from './app.component';
-import { CrisisListComponent }  from './crisis-list.component';
 
 import { HeroesModule }         from './heroes/heroes.module';
+import { CrisisCenterModule }   from './crisis-center/crisis-center.module';
 
 import { AppRoutingModule }   from './app-routing.module';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 
-import './rxjs-extensions'
+import './rxjs-extensions';
 
 
 @NgModule({
@@ -23,12 +23,12 @@ import './rxjs-extensions'
         FormsModule,
         HttpModule,
         InMemoryWebApiModule.forRoot(InMemoryDataService),
+        AppRoutingModule,
+        CrisisCenterModule,
         HeroesModule,
-        AppRoutingModule
     ],
     declarations: [
-        AppComponent,
-        CrisisListComponent
+        AppComponent
     ],
     bootstrap: [ AppComponent ]
 })
