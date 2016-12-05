@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CrisisService {
-    private crisisesUrl = 'app/heroes';
+    private crisisesUrl = 'app/crisises';
 
     constructor(private http: Http) {}
 
@@ -31,7 +31,6 @@ export class CrisisService {
     }
 
     getCrisises(): Observable<Crisis[]> {
-        console.log('get all');
         return this.http.get(this.crisisesUrl)
         .map(this.extractData)
         .catch(this.handleError);

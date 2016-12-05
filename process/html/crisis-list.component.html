@@ -1,7 +1,7 @@
 <p>Get your crisis here</p>
 <ul class="items">
-    <li *ngFor="let criris of cririses | async" [class.selected]="isSelected(criris)" (click)="onSelect(criris)">
-        <span class="badge">{{ criris.id }}</span> {{ criris.name }}
+    <li *ngFor="let crisis of crisises | async" [class.selected]="isSelected(crisis)" (click)="onSelect(crisis)">
+        <span class="badge">{{ crisis.id }}</span> {{ crisis.name }}
     </li>
 </ul>
 <router-outlet></router-outlet>

@@ -22,10 +22,10 @@ import './rxjs-extensions';
         BrowserModule,
         FormsModule,
         HttpModule,
-        InMemoryWebApiModule.forRoot(InMemoryDataService),
         AppRoutingModule,
         CrisisCenterModule,
         HeroesModule,
+        InMemoryWebApiModule.forRoot(InMemoryDataService),
     ],
     declarations: [
         AppComponent
