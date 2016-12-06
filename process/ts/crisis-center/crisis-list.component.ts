@@ -26,8 +26,4 @@ export class CrisisListComponent implements OnInit {
     }
 
     isSelected(crisis: Crisis) { return crisis.id === this.selectedId; }
-
-    onSelect(crisis: Crisis) {
-        this.router.navigate([crisis.id], { relativeTo: this.route});
-    }
 }
