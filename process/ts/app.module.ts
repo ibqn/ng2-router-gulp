@@ -9,7 +9,7 @@ import { AppComponent }         from './app.component';
 import { HeroesModule }         from './heroes/heroes.module';
 import { CrisisCenterModule }   from './crisis-center/crisis-center.module';
 
-import { AppRoutingModule }   from './app-routing.module';
+import { AppRoutingModule }     from './app-routing.module';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
@@ -22,10 +22,10 @@ import './rxjs-extensions';
         BrowserModule,
         FormsModule,
         HttpModule,
+        InMemoryWebApiModule.forRoot(InMemoryDataService),
         AppRoutingModule,
         CrisisCenterModule,
         HeroesModule,
-        InMemoryWebApiModule.forRoot(InMemoryDataService),
     ],
     declarations: [
         AppComponent
