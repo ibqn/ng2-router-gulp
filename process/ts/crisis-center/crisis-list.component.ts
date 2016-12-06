@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
     styleUrls: ['crisis-list.component.css']
 })
 export class CrisisListComponent implements OnInit {
-    crisises: Observable<Crisis[]>;
+    crises: Observable<Crisis[]>;
     private selectedId: number;
 
     constructor(
@@ -22,7 +22,7 @@ export class CrisisListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.crisises = this.crisisService.getCrisises();
+        this.crises = this.crisisService.getCrises();
     }
 
     isSelected(crisis: Crisis) { return crisis.id === this.selectedId; }

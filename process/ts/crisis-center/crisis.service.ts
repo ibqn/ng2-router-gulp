@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CrisisService {
-    private crisisesUrl = 'app/crisises';
+    private crisesUrl = 'app/crises';
 
     constructor(private http: Http) {}
 
@@ -30,14 +30,14 @@ export class CrisisService {
         return body.data || {} as Crisis;
     }
 
-    getCrisises(): Observable<Crisis[]> {
-        return this.http.get(this.crisisesUrl)
+    getCrises(): Observable<Crisis[]> {
+        return this.http.get(this.crisesUrl)
         .map(this.extractData)
         .catch(this.handleError);
     }
 
     getCrisis(id: number | string): Observable<Crisis> {
-        return this.getCrisises()
+        return this.getCrises()
         .map(crisises => crisises.find(crisis => crisis.id === +id));
     }
 }

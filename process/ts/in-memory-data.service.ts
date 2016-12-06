@@ -16,12 +16,12 @@ export class InMemoryDataService implements InMemoryDbService {
             {id: 20, name: 'Tornado'}
         ];
 
-        let crisises = [
+        let crises = [
             {id: 21, name: 'Dragon Burning Cities'},
             {id: 22, name: 'Sky Rains Great White Sharks'},
             {id: 23, name: 'Giant Asteroid Heading For Earth'},
             {id: 24, name: 'Procrastinators Meeting Delayed Again'}
         ];
-        return { crisises, heroes };
+        return { crises, heroes };
     }
 }
