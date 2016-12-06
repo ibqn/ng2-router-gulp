@@ -8,6 +8,7 @@ import { AppComponent }         from './app.component';
 
 import { HeroesModule }         from './heroes/heroes.module';
 import { CrisisCenterModule }   from './crisis-center/crisis-center.module';
+import { AdminModule }          from './admin/admin.module';
 
 import { AppRoutingModule }     from './app-routing.module';
 
@@ -26,6 +27,7 @@ import './rxjs-extensions';
         AppRoutingModule,
         CrisisCenterModule,
         HeroesModule,
+        AdminModule,
     ],
     declarations: [
         AppComponent
