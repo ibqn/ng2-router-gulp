@@ -194,7 +194,17 @@ gulp.task('browser-sync', [
     'html',
     'css',
 ].concat(rollUp), () => {
-    let baseDirs = isProd ? [targets.html] : [targets.html, targets.css];
+    let baseDirs = [targets.html];
+    if(!isProd) {
+        const appModules = [
+            '',
+            'heroes',
+            'crisis-center'
+        ];
+        baseDirs = []
+        .concat(appModules.map(f => targets.css + f))
+        .concat(appModules.map(f => targets.html + f));
+    }
     browserSync.init({
         server: baseDirs,
         files: ['./**/*.{html,css,js}'],
