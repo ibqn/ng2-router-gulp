@@ -9,6 +9,7 @@ const gulp          = require('gulp'),
       gulpif        = require('gulp-if'),
       rename        = require("gulp-rename"),
       clean         = require('gulp-clean'),
+      changed       = require('gulp-changed'),
       typescript    = require('gulp-typescript');
 
 const fs   = require('fs'),
@@ -72,12 +73,14 @@ gulp.task('copylibs', () => {
     ].map(i => {
         return 'node_modules/@angular/' + i + '/bundles/' + i + '.umd.js*';
     }))
+    .pipe(changed(targets.js + 'angular'))
     .pipe(gulp.dest(targets.js + 'angular'));
 
     gulp.src([
         // move js and js.map files
         'node_modules/rxjs/**/*.js*',
     ])
+    .pipe(changed(targets.js + 'rxjs'))
     .pipe(gulp.dest(targets.js + 'rxjs'));
 
     gulp.src([
@@ -88,11 +91,13 @@ gulp.task('copylibs', () => {
         'reflect-metadata/Reflect',
         'systemjs/dist/system.src',
     ].map(i => { return 'node_modules/' + i + '.js*'; }))
+    .pipe(changed(targets.js))
     .pipe(gulp.dest(targets.js));
 
     return gulp.src([
         sources.js,
     ])
+    .pipe(changed(targets.js))
     .pipe(gulp.dest(targets.js));
 });
 
@@ -115,6 +120,7 @@ gulp.task('ts', () => {
 
 gulp.task('css', () => {
     return gulp.src(sources.css)
+    .pipe(changed(targets.css))
     .pipe(gulp.dest(targets.css))
     .pipe(browserSync.stream());
 });
@@ -126,10 +132,12 @@ gulp.task('html', () => {
         '**/index' + (isProd ? '-aot' : '') + '.html'
     ]))
     .pipe(rename({basename: 'index'}))
+    .pipe(changed(targets.html))
     .pipe(gulp.dest(targets.html));
 
     return gulp.src(sources.html)
     .pipe(filter(['**', '!**/index*.html']))
+    .pipe(changed(targets.html))
     .pipe(gulp.dest(targets.html));
 });
 
@@ -174,7 +182,7 @@ gulp.task('rollup', ['ngc'], cb => {
 
 let rollUp = isProd ? ['rollup'] : [];
 
-gulp.task('watch', () => {
+gulp.task('watch', ['browser-sync'], () => {
     gulp.watch(sources.css, ['css'].concat(rollUp))
         .on('change', browserSync.reload);
     gulp.watch(sources.html, ['html'].concat(rollUp))
@@ -183,7 +191,7 @@ gulp.task('watch', () => {
         .on('change', browserSync.reload);
     gulp.watch(sources.js, ['copylibs'])
         .on('change', browserSync.reload);
-    gulp.watch(targets.js + '*.js')
+    gulp.watch(targets.js + '**/*.js')
         .on('change', browserSync.reload);
 });
 
@@ -261,6 +269,6 @@ gulp.task('default', [
     'ts',
     'html',
     'css',
-    'watch',
     'browser-sync',
+    'watch',
 ]);
