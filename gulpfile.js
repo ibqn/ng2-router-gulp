@@ -56,6 +56,7 @@ gulp.task('copylibs', () => {
             'core-js/client/shim',
             'zone.js/dist/zone',
         ].map(i => { return 'node_modules/' + i + '.min.js*'; }))
+        .pipe(changed(targets.js))
         .pipe(gulp.dest(targets.js));
     }
 
@@ -111,6 +112,7 @@ gulp.task('ts', () => {
         '**',
         '!**/main' + (isProd ? '' : '-aot') + '.ts'
     ]))
+    .pipe(changed(targets.ts, {extension: '.js'}))
     .pipe(gulpif(!isProd, sourcemaps.init()))
     .pipe(gulpif(!isProd, typescript(tscConfig.compilerOptions)))
     .pipe(gulpif(!isProd, sourcemaps.write('.')))
