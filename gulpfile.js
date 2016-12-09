@@ -209,8 +209,8 @@ gulp.task('browser-sync', [
     if(!isProd) {
         // Obtain the app module names on the fly, based on the typescript folder stucture
         const appModules = glob.sync(sourcesPath + 'ts/*')
-            .filter(path => fs.statSync(path).isDirectory())
-            .map(path => path.basename(path))
+            .filter(p => fs.statSync(p).isDirectory())
+            .map(p => path.basename(p))
             .concat(['']);
         baseDirs = []
             .concat(appModules.map(f => targets.css + f))
