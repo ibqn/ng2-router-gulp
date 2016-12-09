@@ -14,6 +14,7 @@ const gulp          = require('gulp'),
 
 const fs   = require('fs'),
       path = require('path'),
+      glob = require('glob'),
       url  = require('url');
 
 const exec = require('child_process').exec;
@@ -206,15 +207,14 @@ gulp.task('browser-sync', [
 ].concat(rollUp), () => {
     let baseDirs = [targets.html];
     if(!isProd) {
-        const appModules = [
-            '',
-            'admin',
-            'heroes',
-            'crisis-center',
-        ];
+        // Obtain the app module names on the fly, based on the typescript folder stucture
+        const appModules = glob.sync(sourcesPath + 'ts/*')
+            .filter(path => fs.statSync(path).isDirectory())
+            .map(path => path.basename(path))
+            .concat(['']);
         baseDirs = []
-        .concat(appModules.map(f => targets.css + f))
-        .concat(appModules.map(f => targets.html + f));
+            .concat(appModules.map(f => targets.css + f))
+            .concat(appModules.map(f => targets.html + f));
     }
     browserSync.init({
         server: baseDirs,
@@ -232,8 +232,8 @@ gulp.task('browser-sync', [
                 let fileName = url.parse(req.url);
                 fileName = fileName.href.split(fileName.search).join("");
                 let fileExists = baseDirs
-                .map(e => fs.existsSync(e + fileName) && !fs.statSync(e + fileName).isDirectory())
-                .some(e => e);
+                    .map(e => fs.existsSync(e + fileName) && !fs.statSync(e + fileName).isDirectory())
+                    .some(e => e);
                 if(
                     !fileExists &&
                     fileName.indexOf("browser-sync-client") < 0 &&
