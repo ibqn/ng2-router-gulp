@@ -21,6 +21,9 @@ import { DialogService}  from '../dialog.service';
 
 import { Observable }    from 'rxjs/Observable';
 
+import { CanDeactivate } from '@angular/router';
+import { CanComponentDeactivate } from '../can-deactivate-guard.service';
+
 
 @Component({
     selector: 'crisis-detail',
@@ -52,7 +55,7 @@ import { Observable }    from 'rxjs/Observable';
         ])
     ]
 })
-export class CrisisDetailComponent implements OnInit {
+export class CrisisDetailComponent implements OnInit, CanDeactivate<CanComponentDeactivate> {
     crisis: Crisis;
     editName: string;
 
