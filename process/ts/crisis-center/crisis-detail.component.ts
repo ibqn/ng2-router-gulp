@@ -21,7 +21,10 @@ import { DialogService}  from '../dialog.service';
 
 import { Observable }    from 'rxjs/Observable';
 
-import { CanDeactivate } from '@angular/router';
+import {
+    ActivatedRouteSnapshot,
+    RouterStateSnapshot
+} from '@angular/router';
 import { CanComponentDeactivate } from '../can-deactivate-guard.service';
 
 
@@ -55,7 +58,7 @@ import { CanComponentDeactivate } from '../can-deactivate-guard.service';
         ])
     ]
 })
-export class CrisisDetailComponent implements OnInit, CanDeactivate<CanComponentDeactivate> {
+export class CrisisDetailComponent implements OnInit, CanComponentDeactivate {
     crisis: Crisis;
     editName: string;
 
@@ -97,7 +100,10 @@ export class CrisisDetailComponent implements OnInit, CanDeactivate<CanComponent
         );
     }
 
-    canDeactivate(): Observable<boolean> | boolean  {
+    canBeDeactivated(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<boolean> | boolean  {
         // Allow synchronous navigation (`true`) if no crisis or the crisis is unchanged
         if (!this.crisis || this.crisis.name === this.editName) {
             return true;
