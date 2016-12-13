@@ -1,6 +1,8 @@
 import { NgModule }                 from '@angular/core';
 import { RouterModule, Routes }     from '@angular/router';
 
+import { CanDeactivateGuard }       from './can-deactivate-guard.service';
+
 
 const routes: Routes = [
     {
@@ -12,7 +14,8 @@ const routes: Routes = [
 
 
 @NgModule({
-	imports: [ RouterModule.forRoot(routes) ],
-	exports: [ RouterModule ]
+    imports: [ RouterModule.forRoot(routes) ],
+    providers: [ CanDeactivateGuard ],
+    exports: [ RouterModule ]
 })
 export class AppRoutingModule {}

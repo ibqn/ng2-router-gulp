@@ -17,7 +17,9 @@ import {
 import { CrisisService } from './crisis.service';
 import { Crisis } from './crisis.model';
 
-import 'rxjs/add/operator/switchMap';
+import { DialogService}  from '../dialog.service';
+
+import { Observable }    from 'rxjs/Observable';
 
 
 @Component({
@@ -52,6 +54,7 @@ import 'rxjs/add/operator/switchMap';
 })
 export class CrisisDetailComponent implements OnInit {
     crisis: Crisis;
+    editName: string;
 
     @HostBinding('@routeAnimation') get routeAnimation() {
         return true;
@@ -67,6 +70,7 @@ export class CrisisDetailComponent implements OnInit {
 
     constructor(
         private service: CrisisService,
+        private dialogService: DialogService,
         private route: ActivatedRoute,
         private router: Router
     ) {}
@@ -76,13 +80,36 @@ export class CrisisDetailComponent implements OnInit {
             // convert string to a number
             let id: number = +params['id'];
             return this.service.getCrisis(id);
-        }).subscribe(
-            crisis => this.crisis = crisis
-        );
+        }).subscribe((crisis: Crisis) => {
+            this.crisis = crisis;
+            this.editName = crisis.name;
+        });
     }
 
     gotoCrises() {
         let crisisId = this.crisis ? this.crisis.id : null;
-        this.router.navigate(['../', { id: crisisId, panic: 'yes' }], { relativeTo: this.route });
+        this.router.navigate(
+            ['../', { id: crisisId, panic: 'yes' }],
+            { relativeTo: this.route }
+        );
+    }
+
+    canDeactivate(): Observable<boolean> | boolean  {
+        // Allow synchronous navigation (`true`) if no crisis or the crisis is unchanged
+        if (!this.crisis || this.crisis.name === this.editName) {
+            return true;
+        }
+        // Otherwise ask the user with the dialog service and return its
+        // promise which resolves to true or false when the user decides
+        return this.dialogService.confirm('Discard changes?');
+    }
+
+    cancel() {
+        this.gotoCrises();
+    }
+
+    save() {
+        this.crisis.name = this.editName;
+        this.gotoCrises();
     }
 }

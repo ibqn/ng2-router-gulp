@@ -1,12 +1,13 @@
 <div *ngIf="crisis">
-  <h3>"{{ crisis.name }}"</h3>
+  <h3>"{{ editName }}"</h3>
   <div>
     <label>Id: </label>{{ crisis.id }}</div>
   <div>
     <label>Name: </label>
-    <input [(ngModel)]="crisis.name" placeholder="name"/>
+    <input [(ngModel)]="editName" placeholder="name"/>
   </div>
   <p>
-    <button (click)="gotoCrises()">Back</button>
+    <button (click)="save()">Save</button>
+    <button (click)="cancel()">Back</button>
   </p>
 </div>

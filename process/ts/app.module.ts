@@ -17,6 +17,8 @@ import { LoginComponent }       from './login.component';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 
+import { DialogService }        from './dialog.service';
+
 import './rxjs-extensions';
 
 
@@ -35,6 +37,9 @@ import './rxjs-extensions';
     declarations: [
         LoginComponent,
         AppComponent
+    ],
+    providers: [
+        DialogService
     ],
     bootstrap: [ AppComponent ]
 })
