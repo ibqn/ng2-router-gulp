@@ -8,6 +8,7 @@ const gulp          = require('gulp'),
       filter        = require('gulp-filter'),
       gulpif        = require('gulp-if'),
       rename        = require("gulp-rename"),
+      async         = require("async"),
       clean         = require('gulp-clean'),
       changed       = require('gulp-changed'),
       typescript    = require('gulp-typescript');
@@ -51,7 +52,7 @@ let targets = {
 };
 
 
-gulp.task('copylibs', () => {
+gulp.task('copylibs', cb => {
     if (isProd) {
         return gulp.src([
             'core-js/client/shim',
@@ -61,46 +62,62 @@ gulp.task('copylibs', () => {
         .pipe(gulp.dest(targets.js));
     }
 
+    let tasks = [];
+
     // angular dependencies: *js and *map files
-    gulp.src([
-        'core',
-        'common',
-        'compiler',
-        'platform-browser',
-        'platform-browser-dynamic',
-        'http',
-        'router',
-        'forms',
-        'upgrade',
-    ].map(i => {
-        return 'node_modules/@angular/' + i + '/bundles/' + i + '.umd.js*';
-    }))
-    .pipe(changed(targets.js + 'angular'))
-    .pipe(gulp.dest(targets.js + 'angular'));
+    tasks.push(cb => {
+        gulp.src([
+            'core',
+            'common',
+            'compiler',
+            'platform-browser',
+            'platform-browser-dynamic',
+            'http',
+            'router',
+            'forms',
+            'upgrade',
+        ].map(i => {
+            return 'node_modules/@angular/' + i + '/bundles/' + i + '.umd.js*';
+        }))
+        .pipe(changed(targets.js + 'angular'))
+        .pipe(gulp.dest(targets.js + 'angular'))
+        .on("end", cb);
+    });
 
-    gulp.src([
-        // move js and js.map files
-        'node_modules/rxjs/**/*.js*',
-    ])
-    .pipe(changed(targets.js + 'rxjs'))
-    .pipe(gulp.dest(targets.js + 'rxjs'));
+    tasks.push(cb => {
+        gulp.src([
+            // move js and js.map files
+            'node_modules/rxjs/**/*.js*',
+        ])
+        .pipe(changed(targets.js + 'rxjs'))
+        .pipe(gulp.dest(targets.js + 'rxjs'))
+        .on("end", cb);
+    });
 
-    gulp.src([
-        // additional
-        'angular-in-memory-web-api/bundles/in-memory-web-api.umd',
-        'core-js/client/shim.min',
-        'zone.js/dist/zone',
-        'reflect-metadata/Reflect',
-        'systemjs/dist/system.src',
-    ].map(i => { return 'node_modules/' + i + '.js*'; }))
-    .pipe(changed(targets.js))
-    .pipe(gulp.dest(targets.js));
+    tasks.push(cb => {
+        gulp.src([
+            // additional
+            'angular-in-memory-web-api/bundles/in-memory-web-api.umd',
+            'core-js/client/shim.min',
+            'zone.js/dist/zone',
+            'reflect-metadata/Reflect',
+            'systemjs/dist/system.src',
+        ].map(i => { return 'node_modules/' + i + '.js*'; }))
+        .pipe(changed(targets.js))
+        .pipe(gulp.dest(targets.js))
+        .on("end", cb);
+    });
 
-    return gulp.src([
-        sources.js,
-    ])
-    .pipe(changed(targets.js))
-    .pipe(gulp.dest(targets.js));
+    tasks.push(cb => {
+        gulp.src([
+            sources.js,
+        ])
+        .pipe(changed(targets.js))
+        .pipe(gulp.dest(targets.js))
+        .on("end", cb);
+    });
+
+    async.parallel(tasks, cb);
 });
 
 
@@ -174,12 +191,8 @@ gulp.task('rollup', ['ngc'], cb => {
         cmd  = '"node_modules/.bin/rollup" -c rollup.config.js';
     }
     cmd += ' && gzip --force builds/release/js/build.js';
-    // Filter known warning messages!
-    const errFilter = (messages) => {
-        const warningMsg = /The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten\./;
-        return messages.split('\n').filter(line => !warningMsg.test(line)).join('\n');
-    };
-    return run_proc(cmd, cb, { errFilter: errFilter });
+
+    return run_proc(cmd, cb);
 });
 
 
