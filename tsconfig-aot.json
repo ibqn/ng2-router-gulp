@@ -22,7 +22,8 @@
         "builds/release/*"
     ],
     "exclude": [
-        "node_modules/*",
+        "node_modules/**",
+        "!node_modules/@types",
         "process/*",
         "**/main.ts"
     ],
