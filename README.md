@@ -1,5 +1,7 @@
 # ng2-router-gulp
 
+![](ng2-router.png?raw=true | width=100)
+
 ## Preparation
 ```
 npm install
