@@ -1,4 +1,7 @@
 # ng2-router-gulp
+Angular2 router and nagigation example with Just-in-Time (JIT) and Ahead-of-Time (AOT) compilation support.
+
+This example simply follows the offcial router & navigation [guide](https://angular.io/docs/ts/latest/guide/router.html).
 
 ![](ng2-router.png?raw=true | width=100)
 
