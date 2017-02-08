@@ -238,7 +238,7 @@ gulp.task('browser-sync', [
         // Middleware for serving Single Page Applications (SPA)
         middleware: [
             require("connect-logger")({
-                //format: "%date %status %method %url (%time)"
+                format: "%date %status %method %url (%time)"
                 // default: %date %status %method %url (%route - %time)
             }),
             (req, res, next) => {
