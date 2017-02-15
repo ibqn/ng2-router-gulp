@@ -133,7 +133,7 @@ gulp.task('ts', () => {
     .pipe(gulpif(!isProd, sourcemaps.init()))
     .pipe(gulpif(!isProd, typescript(tscConfig.compilerOptions)))
     .pipe(gulpif(!isProd, sourcemaps.write('.')))
-    .pipe(changed(targets.ts, {extension: '.js'}))
+    //.pipe(changed(targets.ts, {extension: '.js'}))
     .pipe(gulp.dest(targets.ts));
 });
 
