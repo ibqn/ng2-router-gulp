@@ -3,6 +3,8 @@ import { RouterModule, Routes }     from '@angular/router';
 
 import { CanDeactivateGuard }       from './can-deactivate-guard.service';
 
+import { PageNotFoundComponent }    from './not-found.component';
+
 
 const routes: Routes = [
     {
@@ -10,6 +12,10 @@ const routes: Routes = [
         redirectTo: 'crisis-center',
         pathMatch: 'full'
     },
+    {
+        path: '**',
+        component: PageNotFoundComponent
+    }
 ];
 
 
