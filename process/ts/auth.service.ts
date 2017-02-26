@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
-    private loggedIn: boolean = false;
+    private loggedIn = false;
 
     // store the URL so we can redirect after logging in
     redirectUrl: string;

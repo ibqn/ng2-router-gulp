@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     checkLogin(url: string): boolean {
-        if(this.authService.isLoggedIn) { return true; }
+        if (this.authService.isLoggedIn) { return true; }
 
         // Store the attempted Url for redirecting
         this.authService.redirectUrl = url;
