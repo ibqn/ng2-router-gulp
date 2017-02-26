@@ -1,6 +1,9 @@
 {
   "name": "ng2-router-gulp",
   "version": "1.0.0",
+  "scripts": {
+    "lint": "tslint  -t verbose -c tslint.json ./process/ts/**/*.ts"
+  },
   "description": "Famous angular 2 tutorial: tour of heroes with gulpjs",
   "repository": "ibqn/ng2-router-gulp",
   "dependencies": {
@@ -41,6 +44,7 @@
     "rollup-plugin-commonjs": "^7.0.0",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-uglify": "^1.0.1",
-    "typescript": "^2.1.6"
+    "tslint": "^4.4.2",
+    "typescript": "^2.2.1"
   }
 }
