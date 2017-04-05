@@ -14,6 +14,8 @@
             app: 'js/app',
             // angular bundles,
             '@angular': 'npm:angular',
+            '@angular/platform-browser/animations': 'npm:angular/platform-browser-animations',
+            '@angular/animations/browser': 'npm:angular/animations-browser',
             // other libraries
             'rxjs':                      'npm:rxjs',
             'angular-in-memory-web-api': 'npm:in-memory-web-api.umd.js'

@@ -66,7 +66,7 @@ gulp.task('copylibs', cb => {
 
     // angular dependencies: *js and *map files
     tasks.push(cb => {
-        gulp.src([
+        const modules = [
             'core',
             'common',
             'compiler',
@@ -75,9 +75,16 @@ gulp.task('copylibs', cb => {
             'http',
             'router',
             'forms',
-            'upgrade',
+            'animations',
         ].map(i => {
-            return 'node_modules/@angular/' + i + '/bundles/' + i + '.umd.js*';
+            return { 'module': i, 'file': i };
+        }).concat([
+            { 'module': 'platform-browser', 'file': 'platform-browser-animations' },
+            { 'module': 'animations', 'file': 'animations-browser' }
+        ]);
+        console.log(modules);
+        gulp.src(modules.map(el => {
+            return `node_modules/@angular/${el.module}/bundles/${el.file}.umd.js*`;
         }))
         .pipe(changed(targets.js + 'angular'))
         .pipe(gulp.dest(targets.js + 'angular'))
