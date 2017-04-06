@@ -82,7 +82,6 @@ gulp.task('copylibs', cb => {
             { 'module': 'platform-browser', 'file': 'platform-browser-animations' },
             { 'module': 'animations', 'file': 'animations-browser' }
         ]);
-        console.log(modules);
         gulp.src(modules.map(el => {
             return `node_modules/@angular/${el.module}/bundles/${el.file}.umd.js*`;
         }))
