@@ -224,19 +224,8 @@ gulp.task('browser-sync', [
     'html',
     'css',
 ].concat(rollUp), () => {
-    let baseDirs = [targets.html];
-    if(!isProd) {
-        // Obtain the app module names on the fly, based on the typescript folder stucture
-        const appModules = glob.sync(sourcesPath + 'ts/*')
-            .filter(p => fs.statSync(p).isDirectory())
-            .map(p => path.basename(p))
-            .concat(['']);
-        baseDirs = []
-            .concat(appModules.map(f => targets.css + f))
-            .concat(appModules.map(f => targets.html + f));
-    }
     browserSync.init({
-        server: baseDirs,
+        server: targets.html,
         files: ['./**/*.{html,css,js}'],
         watchOptions: {
             ignored: 'node_modules'
@@ -247,21 +236,9 @@ gulp.task('browser-sync', [
                 format: "%date %status %method %url (%time)"
                 // default: %date %status %method %url (%route - %time)
             }),
-            (req, res, next) => {
-                let fileName = url.parse(req.url);
-                fileName = fileName.href.split(fileName.search).join("");
-                let fileExists = baseDirs
-                    .map(e => fs.existsSync(e + fileName) && !fs.statSync(e + fileName).isDirectory())
-                    .some(e => e);
-                if(
-                    !fileExists &&
-                    fileName.indexOf("browser-sync-client") < 0 &&
-                    !fileName.match(/\.(gz|css|js|html)$/g)
-                ) {
-                    req.url = "/" + defaultFile;
-                }
-                return next();
-            },
+            require('connect-history-api-fallback')({
+                index: '',
+            }),
             (req, res, next) => {
                 let fileName = url.parse(req.url);
                 fileName = fileName.href.split(fileName.search).join("");
